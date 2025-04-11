@@ -8,14 +8,14 @@ export default class extends Controller {
 
   // Standard Stimulus connect method
   connect(): void {
-    console.log("Hello from Stimulus via TypeScript!");
+    // console.log("Hello from Stimulus via TypeScript!");
     this.greet("TypeScript");
   }
 
   // Example method with type annotation
   greet(name: string): void {
     this.element.innerHTML = `<h1>Hello, ${name}!</h1>`;
-    console.log(`Greeting ${name}`);
+    // console.log(`Greeting ${name}`);
   }
 
   // Example of accessing a typed target (if you define targets)
