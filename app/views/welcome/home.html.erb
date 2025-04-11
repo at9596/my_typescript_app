@@ -1,0 +1,21 @@
+<%# app/views/pages/home.html.erb %>
+<h1>Basic Feature: Toggle Visibility</h1>
+
+<%# data-controller links this div to our Stimulus controller %>
+<%# data-toggle-hidden-class defines the class to toggle %>
+<div data-controller="toggle" data-toggle-hidden-class="d-none">
+
+  <%# data-action links the button click to the toggle#toggle method %>
+  <button type="button"
+          data-action="click->toggle#toggle"
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+    Toggle Details
+  </button>
+
+  <%# data-toggle-target links this paragraph to the controller's 'togglableElement' target %>
+  <p data-toggle-target="togglableElement" class="mt-4 p-4 bg-gray-100 border rounded d-none">
+    This is the detailed information that can be shown or hidden. It starts hidden because of the 'hidden' class.
+    (If you're not using Tailwind, replace 'hidden' with a class like 'd-none' and define it in your CSS: `.d-none { display: none; }`)
+  </p>
+
+</div>
