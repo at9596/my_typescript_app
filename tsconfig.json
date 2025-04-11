@@ -1,0 +1,56 @@
+// tsconfig.json
+{
+    "compilerOptions": {
+      /* Base Options: */
+      "esModuleInterop": true, // Enables compatibility with CommonJS modules
+      "skipLibCheck": true, // Skip type checking of declaration files (.d.ts)
+      "target": "es2016", // Target modern browsers (adjust as needed)
+      "allowJs": true, // Allow JavaScript files to be compiled
+      "resolveJsonModule": true, // Include modules imported with .json extension
+      "moduleDetection": "force", // Treat files as modules even without imports/exports
+  
+      /* Strictness */
+      "strict": true, // Enable all strict type-checking options
+      "noUnusedLocals": true, // Report errors on unused local variables
+      "noUnusedParameters": true, // Report errors on unused parameters
+      "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statements
+  
+      /* Module Resolution */
+      "module": "es2022", // Use modern ES modules (esbuild handles bundling)
+      "moduleResolution": "node", // How modules get resolved (standard for Node)
+      "baseUrl": ".", // Base directory for resolving non-relative module names
+      "paths": {
+        // Optional: Define path aliases if needed (e.g., "@/components/*": ["app/javascript/components/*"])
+        "*": ["node_modules/*", "app/javascript/*"] // Helps TS find your JS code
+      },
+  
+      /* Emit */
+      // "noEmit": true,        // **Important:** Set to true if esbuild handles ALL emitting. esbuild ignores tsconfig's emit options anyway, but this prevents 'tsc' from accidentally outputting files if run manually.
+      "declaration": true,       // Generate .d.ts files (optional, good for libraries)
+      "declarationMap": true,    // Generate sourcemaps for .d.ts files (optional)
+      "sourceMap": true,         // Generate .map files for debugging (esbuild also generates sourcemaps)
+  
+      /* Source Root */
+      "rootDir": "app/javascript", // Specify the root directory of input files
+  
+      /* Interop Constraints */
+      "isolatedModules": true, // Ensure files can be safely transpiled without relying on other imports
+  
+      /* Completeness */
+      "skipDefaultLibCheck": true // Skip type checking of default library declaration files
+    },
+    // Specify which files TypeScript should include in the compilation context
+    "include": [
+      "app/javascript/**/*.ts", // Include all .ts files in app/javascript
+      "app/javascript/**/*.js"  // Optionally include .js files if allowJs is true
+    ],
+    // Specify files/patterns to exclude from compilation
+    "exclude": [
+      "node_modules",
+      "public",
+      "vendor",
+      "tmp",
+      "log",
+      "app/assets/builds" // Exclude the output directory
+    ]
+  }
