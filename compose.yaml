@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    
+  web:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "3000:80"
+
+volumes:
+  db_data:
