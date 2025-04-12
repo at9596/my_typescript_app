@@ -1,9 +1,19 @@
-name: CI
+name: Build and Push Docker image
 
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [ master ]
+
+jobs:
+  # Analyze code & dependencies for issues
+  ##  Build Docker image & push to registry
+  name: Scan and Deploy
+
+on:
+  pull_request:
+  push:
+    branches: [ master ]
 
 jobs:
   scan_ruby:
@@ -11,17 +21,34 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: '3.2'  # Or hardcode from `.ruby-version`
           bundler-cache: true
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run Brakeman (static analysis)
         run: bin/brakeman --no-pager
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+
+        
   lint:
     runs-on: ubuntu-latest
     steps:
